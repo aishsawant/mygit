@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+<script>
+function showHint() {
+        str = document.getElementById("USDValue").value
+    if (str.length == 0) {
+        document.getElementById("txtHint").value = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var2 = JSON.parse(this.responseText)
+                var23 = parseInt(str) * var2.rates.INR
+                document.getElementById("txtHint").value = JSON.stringify(var23)
+
+     }
+  };
+        xmlhttp.open("GET", "https://api.exchangeratesapi.io/latest?base=USD", true);
+        xmlhttp.send();
+    }
+}
+function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            alert("enter numbers only");
+return true;
+    }
+</script>
+</head>
+<body>
+
+<h1>Welcome</h1>
+<p>Aishwarya.</p>
+Enter value in USD: <input type="text" pattern="[0-9]{10}" id="USDValue" value="" onkeypress="javascript:return isNumber(event)"><br>
+<input type="submit" onclick="showHint()"></input type>
+<span id="invshow"></span>
+
+<p>Equivalent INR: <input type="text" id="txtHint"></input></p>
+</body>
+</html>
